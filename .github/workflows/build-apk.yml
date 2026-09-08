@@ -11,7 +11,7 @@ on:
 
 jobs:
   build-ex2-car:
-    name: Build ex2_car (Geely EX2 Tools - màn hình xe)
+    name: Build ex2_car (Geely EX2 Tools - màn hình xe, user)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -48,6 +48,82 @@ jobs:
         with:
           name: ex2_car
           path: dist/ex2_car.apk
+          if-no-files-found: error
+
+  build-ex2-car-system:
+    name: Build ex2_car (system, platform-signed, có quyền AVAS)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: geely_ex2_tools
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Restore platform keystore from secrets
+        env:
+          PLATFORM_PK8_B64: ${{ secrets.AOSP_PLATFORM_PK8_B64 }}
+          PLATFORM_CERT_B64: ${{ secrets.AOSP_PLATFORM_CERT_B64 }}
+        run: |
+          if [ -z "$PLATFORM_PK8_B64" ] || [ -z "$PLATFORM_CERT_B64" ]; then
+            echo "::error::Thiếu secrets AOSP_PLATFORM_PK8_B64 / AOSP_PLATFORM_CERT_B64"
+            exit 1
+          fi
+          mkdir -p keys/aosp-platform
+          echo "$PLATFORM_PK8_B64" | base64 -d > keys/aosp-platform/platform.pk8
+          echo "$PLATFORM_CERT_B64" | base64 -d > keys/aosp-platform/platform.x509.pem
+
+      - name: Build systemRelease (unsigned)
+        run: ./gradlew :app:assembleSystemRelease --stacktrace
+
+      - name: Locate build-tools
+        id: bt
+        run: |
+          BT=$(find "$ANDROID_HOME/build-tools" -maxdepth 1 -type d | sort -V | tail -1)
+          echo "Using build-tools: $BT"
+          echo "bt=$BT" >> "$GITHUB_OUTPUT"
+
+      - name: Strip META-INF, zipalign & platform-sign
+        run: |
+          set -e
+          BT="${{ steps.bt.outputs.bt }}"
+          UNSIGNED=$(find app/build/outputs/apk/system/release -name "*.apk" | head -n1)
+          cp "$UNSIGNED" stripped.apk
+          zip -d stripped.apk "META-INF/*" || true
+          "$BT/zipalign" -f -p 4 stripped.apk aligned.apk
+          "$BT/apksigner" sign \
+            --key keys/aosp-platform/platform.pk8 \
+            --cert keys/aosp-platform/platform.x509.pem \
+            --v1-signing-enabled true \
+            --v2-signing-enabled true \
+            --out ex2_car_system.apk \
+            aligned.apk
+          "$BT/apksigner" verify --print-certs ex2_car_system.apk
+
+      - name: Remove keys (không lưu lại trên runner)
+        if: always()
+        run: rm -rf keys aligned.apk stripped.apk
+
+      - name: Upload ex2_car (system) APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ex2_car_system
+          path: geely_ex2_tools/ex2_car_system.apk
           if-no-files-found: error
 
   build-ex2-phone:
