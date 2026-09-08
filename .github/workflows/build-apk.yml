@@ -1,0 +1,91 @@
+name: Build APKs
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'geely_ex2_tools/**'
+      - 'ex2-phone/**'
+      - '.github/workflows/build-apk.yml'
+  workflow_dispatch: {}
+
+jobs:
+  build-ex2-car:
+    name: Build ex2_car (Geely EX2 Tools - màn hình xe)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: geely_ex2_tools
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build userDebug APK
+        run: ./gradlew assembleUserDebug --stacktrace
+
+      - name: Rename APK to ex2_car.apk
+        run: |
+          mkdir -p ../dist
+          find app/build/outputs/apk -name "*.apk" -exec cp {} ../dist/ex2_car.apk \;
+
+      - name: Upload ex2_car APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ex2_car
+          path: dist/ex2_car.apk
+          if-no-files-found: error
+
+  build-ex2-phone:
+    name: Build ex2_phone (app điện thoại Android)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ex2-phone
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Rename APK to ex2_phone.apk
+        run: |
+          mkdir -p ../dist
+          find app/build/outputs/apk -name "*.apk" -exec cp {} ../dist/ex2_phone.apk \;
+
+      - name: Upload ex2_phone APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ex2_phone
+          path: dist/ex2_phone.apk
+          if-no-files-found: error
