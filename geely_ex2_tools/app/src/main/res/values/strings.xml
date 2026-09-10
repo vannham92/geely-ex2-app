@@ -328,4 +328,30 @@
     <string name="settings_phone_link_idle">Chưa có thiết bị nào</string>
     <string name="settings_phone_link_state_on">Đang kết nối</string>
     <string name="settings_phone_link_state_off">Trống</string>
+
+    <string name="tool_floater_title">Truy cập nhanh</string>
+    <string name="tool_floater_description">Bong bóng nổi: đổi chế độ lái, tắt AVAS, xem tốc độ/pin</string>
+
+    <string name="floater_screen_title">Truy cập nhanh (Floater)</string>
+    <string name="floater_section_control">Điều khiển</string>
+    <string name="floater_enable_title">Bật bong bóng nổi</string>
+    <string name="floater_enable_summary">Hiện một bong bóng nhỏ nổi trên mọi màn hình, kéo được tự do. Bấm vào để mở bảng truy cập nhanh.</string>
+    <string name="floater_section_permission">Quyền hiển thị đè lên ứng dụng khác</string>
+    <string name="floater_permission_granted">Đã cấp quyền</string>
+    <string name="floater_permission_missing">Chưa cấp quyền — bấm để cấp</string>
+    <string name="floater_permission_button">Cấp quyền hiển thị đè</string>
+    <string name="floater_footer">Bảng truy cập nhanh gồm: đổi chế độ lái, tắt/bật AVAS, xem tốc độ và pin trực tiếp, và nút mở ứng dụng. Bản build user chỉ xem được, cần bản system để thao tác AVAS.</string>
+
+    <string name="floater_bubble_label">EX2</string>
+    <string name="floater_panel_title">Truy cập nhanh</string>
+    <string name="floater_driving_mode_label">Chế độ lái</string>
+    <string name="floater_avas_label">AVAS</string>
+    <string name="floater_telemetry_format">Tốc độ: %1$s · Pin: %2$s</string>
+    <string name="floater_speed_value">%1$d km/h</string>
+    <string name="floater_battery_value">%1$d%%</string>
+    <string name="floater_open_app">Mở ứng dụng</string>
+    <string name="floater_value_unavailable">--</string>
+    <string name="floater_channel">Truy cập nhanh</string>
+    <string name="floater_notification_title">Truy cập nhanh</string>
+    <string name="floater_notification_text">Đang hiển thị bong bóng nổi</string>
 </resources>
