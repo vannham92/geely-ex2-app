@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_sapo_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_battery_background"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/widget_sapo_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/sapo_widget_unavailable"
+            android:textColor="@color/widget_battery_text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_sapo_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/widget_battery_text_secondary"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/widget_sapo_minus"
+        android:layout_width="34dp"
+        android:layout_height="38dp"
+        android:background="@drawable/widget_sapo_button"
+        android:gravity="center"
+        android:text="−"
+        android:textColor="@color/widget_battery_text"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/widget_sapo_plus"
+        android:layout_width="34dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="6dp"
+        android:background="@drawable/widget_sapo_button"
+        android:gravity="center"
+        android:text="+"
+        android:textColor="@color/widget_battery_text"
+        android:textSize="20sp" />
+</LinearLayout>

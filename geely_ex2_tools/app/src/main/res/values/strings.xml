@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Geely EX2 Tools</string>
-    <string name="welcome_title">Geely EX2 Tools</string>
+    <string name="app_name">Geely Ex2 Car</string>
+    <string name="welcome_title">Geely Ex2 Car</string>
     <string name="welcome_subtitle">Tiện ích cấu hình Geely EX2</string>
 
     <string name="home_tools_title">Công cụ</string>
@@ -354,4 +354,21 @@
     <string name="floater_channel">Truy cập nhanh</string>
     <string name="floater_notification_title">Truy cập nhanh</string>
     <string name="floater_notification_text">Đang hiển thị bong bóng nổi</string>
+
+    <!-- Sapo: blackout + widget điều khiển nhanh -->
+    <string name="sapo_blackout_button">Tắt màn hình (giữ 3 giây)</string>
+    <string name="sapo_blackout_hint">Giữ 3 giây để thoát</string>
+    <string name="sapo_blackout_channel">Màn hình tắt</string>
+    <string name="sapo_blackout_notification_title">Màn hình tắt</string>
+    <string name="sapo_blackout_notification_text">Đang che màn hình</string>
+    <string name="sapo_widget_temperature">Nhiệt độ</string>
+    <string name="sapo_widget_fan">Quạt</string>
+    <string name="sapo_widget_regen">Tái sinh</string>
+    <string name="sapo_widget_drive">Chế độ lái</string>
+    <string name="sapo_widget_description">Điều khiển nhanh trên màn hình chính</string>
+    <string name="sapo_widget_unavailable">--</string>
+    <string name="sapo_widget_temp_value">%1$.1f°C</string>
+    <string name="sapo_widget_fan_value">%1$d</string>
+    <string name="sapo_widget_minus">Giảm</string>
+    <string name="sapo_widget_plus">Tăng</string>
 </resources>

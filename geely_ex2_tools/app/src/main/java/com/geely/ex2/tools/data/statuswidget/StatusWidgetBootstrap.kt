@@ -15,6 +15,7 @@ import com.geely.ex2.tools.data.window.AutoWindowAppStarter
 import com.geely.ex2.tools.data.wifi.WifiAutoEnableController
 import com.geely.ex2.tools.data.wifi.WifiStatusIconHelper
 import com.geely.ex2.tools.data.network.CarTcpServer
+import com.geely.ex2.tools.data.sapo.widget.SapoControlWidgetHelper
 
 object StatusWidgetBootstrap {
     fun startEnabledWidgets(context: Context, reason: String) {
@@ -48,6 +49,8 @@ object StatusWidgetBootstrap {
             AvasAppStarter.startRestoreServiceIfEnabled(appContext, reason)
 
             AutoWindowAppStarter.startServiceIfEnabled(appContext, reason)
+
+            SapoControlWidgetHelper.updateAll(appContext, reason)
         }
     }
 }

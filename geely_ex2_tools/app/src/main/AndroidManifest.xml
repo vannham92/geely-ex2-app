@@ -161,6 +161,62 @@
         </receiver>
 
         <receiver
+            android:name=".data.sapo.widget.SapoHvacTempWidgetProvider"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/sapo_widget_temperature">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/sapo_control_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".data.sapo.widget.SapoHvacFanWidgetProvider"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/sapo_widget_fan">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/sapo_control_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".data.sapo.widget.SapoRegenWidgetProvider"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/sapo_widget_regen">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/sapo_control_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".data.sapo.widget.SapoDriveModeWidgetProvider"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/sapo_widget_drive">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/sapo_control_widget_info" />
+        </receiver>
+
+        <receiver
             android:name=".data.driving.DrivingEventReceiver"
             android:directBootAware="true"
             android:enabled="true"
@@ -280,6 +336,13 @@
 
         <service
             android:name=".data.window.AutoWindowService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
+            android:process=":core" />
+
+        <service
+            android:name=".data.sapo.BlackoutOverlayService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="dataSync"

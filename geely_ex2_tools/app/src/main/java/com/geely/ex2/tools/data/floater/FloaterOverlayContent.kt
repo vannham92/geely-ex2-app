@@ -21,6 +21,7 @@ import com.geely.ex2.tools.MainActivity
 import com.geely.ex2.tools.R
 import com.geely.ex2.tools.data.avas.AvasRepository
 import com.geely.ex2.tools.data.driving.DrivingModeRepository
+import com.geely.ex2.tools.data.sapo.BlackoutOverlayService
 import com.geely.ex2.tools.data.vhal.DrivingMode
 import com.geely.ex2.tools.data.vhal.VhalBatteryReaderFactory
 import com.geely.ex2.tools.data.vhal.VhalSpeedReaderFactory
@@ -228,6 +229,7 @@ class FloaterOverlayContent(
         panel.addView(drivingModeRow())
         panel.addView(avasRow())
         panel.addView(telemetryRow())
+        panel.addView(blackoutButton())
         panel.addView(openAppButton())
         return panel
     }
@@ -326,6 +328,30 @@ class FloaterOverlayContent(
             ).apply { bottomMargin = dp(12) }
         }
         return telemetryText
+    }
+
+    private fun blackoutButton(): View = TextView(context).apply {
+        text = context.getString(R.string.sapo_blackout_button)
+        gravity = Gravity.CENTER
+        setTextColor(Color.WHITE)
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+        setPadding(dp(10), dp(10), dp(10), dp(10))
+        background = GradientDrawable().apply {
+            cornerRadius = dp(10).toFloat()
+            setColor(0xFF2B2F36.toInt())
+        }
+        layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+        ).apply { topMargin = dp(10) }
+        setOnClickListener {
+            collapse()
+            try {
+                context.startForegroundService(Intent(context, BlackoutOverlayService::class.java))
+            } catch (_: Throwable) {
+                // Thiếu quyền overlay / FGS bị chặn — service tự dừng nếu thiếu quyền.
+            }
+        }
     }
 
     private fun openAppButton(): View = TextView(context).apply {
